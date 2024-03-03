@@ -1,0 +1,1 @@
+calculatrice simple construite sans utiliser Windows Forms, elle éffectue les opérations de bases.
