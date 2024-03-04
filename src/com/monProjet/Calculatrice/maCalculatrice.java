@@ -5,45 +5,54 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 public class maCalculatrice extends JFrame {
-	private JPanel contentPane;
+	private JPanel ContentPane;
 
 	maCalculatrice() {
-		super("Calculatrice");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(400,700);
-		JPanel contentPane = new JPanel(new BorderLayout(5, 5));
-		
-		JPanel chiffres = new JPanel(new GridLayout(3, 3));
-		
-		// CREATION D'UN TABLEAU CONTENANT LES OPERATEURS
-		String[] operateurs = {"+","-","/","x","="};
-		JPanel operateursLogiques = new JPanel(new GridLayout(5,1));
-		
-		// INNITIALISATION D'UNE BOUCLE FOREACH QUI PARCOURT CHAQUE OPERATEUR
-		for (String operateur : operateurs)
-		{
-			operateursLogiques.add(new JButton(operateur));
-		}
-		contentPane.add(operateursLogiques, BorderLayout.EAST);
-		//TODO PLACER LES OPERATEURS EN BAS A DROITE
-		for (int i = 1; i <= 9; i++) {
-			chiffres.add(new JButton(Integer.toString(i)));
-		}
-		contentPane.add(chiffres, BorderLayout.SOUTH);
-		
-		
-		
-		
-		JTextField text = new JTextField();
-		contentPane.add(text, BorderLayout.NORTH);
-		text.setBounds(20,40,200,28);
-		
-		setContentPane(contentPane);
-		// TODO CHANGER LES CONVENTIONS DE NOMMAGE PAR DES CamelCase
+	    super("Calculatrice");
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setSize(400, 700);
+	    String[] boutons = {"1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "*", ".", "0", "C", "/"};
+
+	   
+	    ContentPane = new JPanel(new GridBagLayout());
+	    GridBagConstraints gbc = new GridBagConstraints();
+
+	    // Configuration pour le champ de texte
+	    JTextField textField = new JTextField();
+	    gbc.gridx = 0;
+	    gbc.gridy = 0;
+	    gbc.gridwidth = 4;
+	    gbc.gridheight = 1; // Réduit la hauteur pour ne prendre que l'espace nécessaire
+	    gbc.fill = GridBagConstraints.BOTH;
+	    gbc.insets = new Insets(0, 0, 0, 0);// espace entre les boutons de 0
+	    ContentPane.add(textField, gbc);
+
+	    
+	    for (int i = 0; i < boutons.length; i++) {
+	        JButton bouton = new JButton(boutons[i]);
+	        gbc.gridx = i % 4;
+	        gbc.gridy = (i / 4) + 1; // Commence à ajouter les boutons en dessous du champ de texte
+	        gbc.gridwidth = 1; // Chaque bouton prend une seule cellule
+	        gbc.gridheight = 1;
+	        
+	        gbc.fill = GridBagConstraints.BOTH;
+	        ContentPane.add(bouton, gbc);
+	    }
+
+	    setContentPane(ContentPane);
 	}
-	
+
+	public static void main(String[] args) {
+		maCalculatrice maCalculatrice = new maCalculatrice();
+		maCalculatrice.setVisible(true);
+	}
 }
